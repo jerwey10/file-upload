@@ -32,10 +32,15 @@ function upload(res, req) {
     form.parse(req, function(err, fields, files) {
 	console.log("parsing done");
 
-	fs.rename(files.upload.path, "./sensarvpn-client3.key", function(err) {
+	console.log(files.upload.path);
+	console.log(files.upload.name);
+	var ufilename = files.upload.name.toLowerCase();
+	console.log(ufilename);
+	ufilename = "./" + ufilename;
+	fs.rename(files.upload.path, ufilename, function(err) {
 	    if (err) {
-		fs.unlink("./sensarvpn-client3.key");
-		fs.rename(files.upload.path, "./sensarvpn-client3.key");
+		fs.unlink(ufilename);
+		fs.rename(files.upload.path, ufilename);
 	    }
 	});
 
