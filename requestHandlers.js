@@ -35,18 +35,18 @@ function upload(res, req) {
 	console.log(files.upload.path);
 	console.log(files.upload.name);
 	var ufilename = files.upload.name.toLowerCase();
-	console.log(ufilename);
-	ufilename = "./" + ufilename;
-	fs.rename(files.upload.path, ufilename, function(err) {
+	var ufilepath = "./" + ufilename;
+	console.log("received file: " + ufilename)
+
+	fs.rename(files.upload.path, ufilepath, function(err) {
 	    if (err) {
-		fs.unlink(ufilename);
-		fs.rename(files.upload.path, ufilename);
+		fs.unlink(ufilepath);
+		fs.rename(files.upload.path, ufilepath);
 	    }
 	});
 
 	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("received image:<br/>");
-	res.write("<img src='/show' />");
+	res.write("received file: " + ufilename);
 	res.end();
     });
 }
